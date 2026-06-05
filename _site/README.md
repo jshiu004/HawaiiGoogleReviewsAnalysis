@@ -72,11 +72,28 @@ Below is the head of the cleaned dataframe:
 I performed univariate analysis on the **price_nums** column to see the distribution of price levels. 
 
 <iframe
-  src="assets/price_histogram2.html"
+  src="assets/price_histogram.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
+
+This distribution shows that most food establishments in the dataset are labeled as either `$` or `$$`, while far fewer are labeled as `$$$` or `$$$$`. This suggests that lower-priced establishments are much more common in the dataset than higher-priced ones.
+
+However, this does not necessarily mean that eating in Hawaii is inexpensive overall. Since the price labels are relative Google categories, a `$` or `$$` restaurant in Hawaii may still be more expensive than a similarly labeled restaurant in another state. Instead, this plot mainly shows that, within Hawaii, most listed food establishments fall into the lower Google price categories.
+
+This imbalance is also important for modeling because there are many more examples of `$` and `$$` restaurants than `$$$` and `$$$$` restaurants. As a result, a classification model may have an easier time predicting the common price categories and may struggle to accurately predict the less common higher-price categories.
+
+<iframe
+  src="assets/avg_rating_violin.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+This distribution shows that restaurant ratings are heavily concentrated above 3.5, with relatively few establishments receiving lower ratings. The median rating is 4.5, suggesting that most food establishments in the dataset are rated highly by Google reviewers.
+
+However, this should be interpreted carefully because Google ratings tend to be skewed toward higher values. A high rating may indicate customer satisfaction, but it may also reflect review bias, since people who leave reviews may not represent all customers equally.
 
 # Assessment of Missingness
 

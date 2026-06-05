@@ -232,7 +232,19 @@
 
 <p>I performed univariate analysis on the <strong>price_nums</strong> column to see the distribution of price levels.</p>
 
-<iframe src="assets/file-name.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/price_histogram.html" width="800" height="600" frameborder="0"></iframe>
+
+<p>This distribution shows that most food establishments in the dataset are labeled as either <code class="language-plaintext highlighter-rouge">$</code> or <code class="language-plaintext highlighter-rouge">$$</code>, while far fewer are labeled as <code class="language-plaintext highlighter-rouge">$$$</code> or <code class="language-plaintext highlighter-rouge">$$$$</code>. This suggests that lower-priced establishments are much more common in the dataset than higher-priced ones.</p>
+
+<p>However, this does not necessarily mean that eating in Hawaii is inexpensive overall. Since the price labels are relative Google categories, a <code class="language-plaintext highlighter-rouge">$</code> or <code class="language-plaintext highlighter-rouge">$$</code> restaurant in Hawaii may still be more expensive than a similarly labeled restaurant in another state. Instead, this plot mainly shows that, within Hawaii, most listed food establishments fall into the lower Google price categories.</p>
+
+<p>This imbalance is also important for modeling because there are many more examples of <code class="language-plaintext highlighter-rouge">$</code> and <code class="language-plaintext highlighter-rouge">$$</code> restaurants than <code class="language-plaintext highlighter-rouge">$$$</code> and <code class="language-plaintext highlighter-rouge">$$$$</code> restaurants. As a result, a classification model may have an easier time predicting the common price categories and may struggle to accurately predict the less common higher-price categories.</p>
+
+<iframe src="assets/avg_rating_violin.html" width="800" height="600" frameborder="0"></iframe>
+
+<p>This distribution shows that restaurant ratings are heavily concentrated above 3.5, with relatively few establishments receiving lower ratings. The median rating is 4.5, suggesting that most food establishments in the dataset are rated highly by Google reviewers.</p>
+
+<p>However, this should be interpreted carefully because Google ratings tend to be skewed toward higher values. A high rating may indicate customer satisfaction, but it may also reflect review bias, since people who leave reviews may not represent all customers equally.</p>
 
 <h1 id="assessment-of-missingness">Assessment of Missingness</h1>
 
