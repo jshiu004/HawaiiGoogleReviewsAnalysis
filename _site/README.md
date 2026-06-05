@@ -72,7 +72,7 @@ Below is the head of the cleaned dataframe:
 I performed univariate analysis on the **price_nums** column to see the distribution of price levels. 
 
 <iframe
-  src="assets/file-name.html"
+  src="assets/price_histogram2.html"
   width="800"
   height="600"
   frameborder="0"

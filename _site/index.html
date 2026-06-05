@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/assets/css/style.css?v=ba3fec9c5b26293852a68d85479033bb04a71fb4" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>What Drives Restaurant Prices in Hawaii? | HawaiiGoogleReviewsAnalysis</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="What Drives Restaurant Prices in Hawaii?" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="HawaiiGoogleReviewsAnalysis" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="What Drives Restaurant Prices in Hawaii?" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","headline":"What Drives Restaurant Prices in Hawaii?","name":"HawaiiGoogleReviewsAnalysis","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <a href="http://localhost:4000/">
+          <h1>HawaiiGoogleReviewsAnalysis</h1>
+        </a>
+        <h2></h2>
+        
+          <a href="https://github.com/jshiu004/HawaiiGoogleReviewsAnalysis" class="button"><small>View project on</small> GitHub</a>
+        
+        
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1 id="what-drives-restaurant-prices-in-hawaii">What Drives Restaurant Prices in Hawaii?</h1>
+<h2 id="by-justin-shiu">By Justin Shiu</h2>
+
+<h1 id="introduction">Introduction</h1>
+
+<h2 id="general-introduction">General Introduction</h2>
+<p>Hawaii is widely known as one of the most expensive states in the United States, both for residents and visitors. As a major tourist destination, food plays an important role in the overall experience of visiting the islands. When choosing where to eat, many people rely on Google and Google Maps to compare restaurants, read reviews, and estimate prices.</p>
+
+<p>Because Google labels restaurants using price categories, I wanted to explore what factors may influence how a restaurant is classified. Features such as ratings, number of reviews, restaurant category, location, and distance from popular tourist areas may all help explain why some restaurants are labeled as more expensive than others. By analyzing these patterns, this project aims to better understand what characteristics are associated with higher restaurant price categories in Hawaii.</p>
+
+<p>The central question I am interested in is: 
+<strong>What factors influence a restaurant’s Google price category in Hawaii?</strong></p>
+
+<h2 id="dataset-introduction">Dataset Introduction</h2>
+<p>This dataset contains a detailed summary of establishments across the Hawaiian Islands, including common Google Maps information such as business name, geographic coordinates, average rating, and number of reviews. The dataset has <strong>21,507 rows and 15 columns</strong>, providing a wide range of information about each establishment. For this project, I focus on the columns most relevant to understanding and predicting a restaurant’s Google price category.</p>
+
+<p>Here is a brief description of the relevant columns:</p>
+
+<ul>
+  <li><strong>name</strong>: The name of the establishment.</li>
+  <li><strong>address</strong>: The physical address of the establishment.</li>
+  <li><strong>latitude</strong>: The latitude coordinate of the establishment’s location.</li>
+  <li><strong>longitude</strong>: The longitude coordinate of the establishment’s location.</li>
+  <li><strong>category</strong>: The type of establishment or business category.</li>
+  <li><strong>avg_rating</strong>: The establishment’s average Google rating, ranging from 1 to 5.</li>
+  <li><strong>num_of_reviews</strong>: The total number of Google reviews the establishment has received.</li>
+  <li><strong>price</strong>: The Google price category of the establishment, ranging from <code class="language-plaintext highlighter-rouge">$</code> to <code class="language-plaintext highlighter-rouge">$$$$</code>.</li>
+  <li><strong>state</strong>: The current status of the restaurant, indicating whether it is permanently closed or still open.</li>
+  <li><strong>hours</strong>: The listed operating hours of the establishment.</li>
+</ul>
+
+<h1 id="data-cleaning-and-exploratory-data-analysis">Data Cleaning and Exploratory Data Analysis</h1>
+
+<h2 id="data-cleaning">Data Cleaning</h2>
+<p>The first step in cleaning the data was to filter the DataFrame so that it only included food-related establishments, rather than all types of locations. To do this, I filtered the <strong>category</strong> column to keep only establishments with food-related categories, such as restaurants, cafes, bars, and dessert shops.</p>
+
+<p>Next, I filtered the DataFrame further by removing rows where <strong>state</strong> indicated that the establishment was permanently closed. This ensured that the analysis only included businesses that are still operating.</p>
+
+<p>To make the price variable easier to work with, I created a new column called <strong>price_num</strong>, which converts the dollar-sign price category into a numeric value from 1 to 4.</p>
+
+<p>I then used the <strong>latitude</strong> and <strong>longitude</strong> coordinates to identify which Hawaiian island each establishment was located on. Establishments that were not located on one of the six main Hawaiian Islands — Oahu, Maui, Big Island, Kauai, Molokai, or Lanai — were removed from the dataset.</p>
+
+<p>After that, I created a new column called <strong>distance_to_nearest_beach_km</strong>, which measures each establishment’s distance to the nearest beach using beach locations from the original dataset.</p>
+
+<p>Finally, I used the <strong>hours</strong> column to engineer several new features related to operating hours, including <strong>days_open_per_week</strong>, <strong>total_hours_open_per_week</strong>, <strong>avg_hours_per_day</strong>, <strong>open_weekend</strong>, <strong>opens_early</strong>, and <strong>closes_late</strong>.</p>
+
+<p>The final cleaned DataFrame contained the original columns <strong>category</strong>, <strong>avg_rating</strong>, <strong>num_of_reviews</strong>, and <strong>price</strong>, along with several engineered features: <strong>price_num</strong>, <strong>island</strong>, <strong>days_open_per_week</strong>, <strong>total_hours_open_per_week</strong>, <strong>avg_hours_per_day</strong>, <strong>open_weekend</strong>, <strong>opens_early</strong>, and <strong>closes_late</strong>.</p>
+
+<p>Below is the head of the cleaned dataframe:</p>
+<h3 id="preview-of-cleaned-dataframe">Preview of Cleaned DataFrame</h3>
+
+<h4 id="core-restaurant-information">Core Restaurant Information</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">category</th>
+      <th style="text-align: right">avg_rating</th>
+      <th style="text-align: right">num_of_reviews</th>
+      <th style="text-align: center">price</th>
+      <th style="text-align: right">price_num</th>
+      <th style="text-align: left">island</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">[‘Coffee shop’]</td>
+      <td style="text-align: right">4.8</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: center">$</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">Maui</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">[‘Restaurant’ ‘Cafe’]</td>
+      <td style="text-align: right">4.3</td>
+      <td style="text-align: right">33</td>
+      <td style="text-align: center">$$</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: left">Oahu</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">[‘Cafe’]</td>
+      <td style="text-align: right">4.4</td>
+      <td style="text-align: right">18</td>
+      <td style="text-align: center">$</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">Oahu</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">[‘Bubble tea store’ ‘Coffee shop’]</td>
+      <td style="text-align: right">4.4</td>
+      <td style="text-align: right">48</td>
+      <td style="text-align: center">$</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">Oahu</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">[‘Coffee shop’]</td>
+      <td style="text-align: right">4.8</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: center">$</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">Maui</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="engineered-location-and-hours-features">Engineered Location and Hours Features</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">distance_to_nearest_beach_km</th>
+      <th style="text-align: right">days_open_per_week</th>
+      <th style="text-align: right">total_hours_open_per_week</th>
+      <th style="text-align: right">avg_hours_per_day</th>
+      <th style="text-align: right">open_weekend</th>
+      <th style="text-align: right">opens_early</th>
+      <th style="text-align: right">closes_late</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">1.645</td>
+      <td style="text-align: right">7</td>
+      <td style="text-align: right">87.5</td>
+      <td style="text-align: right">12.5</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.648</td>
+      <td style="text-align: right">7</td>
+      <td style="text-align: right">78.0</td>
+      <td style="text-align: right">11.14</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.012</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">22.0</td>
+      <td style="text-align: right">5.5</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1.620</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">45.0</td>
+      <td style="text-align: right">9.0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1.645</td>
+      <td style="text-align: right">7</td>
+      <td style="text-align: right">87.5</td>
+      <td style="text-align: right">12.5</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="univariate-analysis">Univariate Analysis</h2>
+
+<p>I performed univariate analysis on the <strong>price_nums</strong> column to see the distribution of price levels.</p>
+
+<iframe src="assets/file-name.html" width="800" height="600" frameborder="0"></iframe>
+
+<h1 id="assessment-of-missingness">Assessment of Missingness</h1>
+
+<h1 id="hypothesis-testing">Hypothesis Testing</h1>
+
+<h1 id="framing-a-prediction-problem">Framing a Prediction Problem</h1>
+
+<h1 id="final-model">Final Model</h1>
+
+<h1 id="fairness-analysis">Fairness Analysis</h1>
+
+
+        </section>
+
+        <aside id="sidebar">
+          
+
+          
+            <p class="repo-owner"><a href="https://github.com/jshiu004/HawaiiGoogleReviewsAnalysis">HawaiiGoogleReviewsAnalysis</a> is maintained by <a href="https://github.com/jshiu004">jshiu004</a>.</p>
+          
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  </body>
+</html>
